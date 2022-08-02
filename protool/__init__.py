@@ -150,11 +150,7 @@ def diff(a_path: str, b_path: str, ignore_keys: Optional[List[str]] = None, tool
 
     #pylint: disable=too-many-locals
 
-    if tool_override is None:
-        diff_tool = "opendiff"
-    else:
-        diff_tool = tool_override
-
+    diff_tool = "opendiff" if tool_override is None else tool_override
     profile_a = ProvisioningProfile(a_path)
     profile_b = ProvisioningProfile(b_path)
 
@@ -215,8 +211,7 @@ def value_for_key(profile_path: str, key: str) -> Optional[Any]:
     profile = ProvisioningProfile(profile_path)
 
     try:
-        value = profile.contents()[key]
-        return value
+        return profile.contents()[key]
     except KeyError:
         return None
 
@@ -226,10 +221,7 @@ def decode(profile_path: str, xml: bool = True):
 
     profile = ProvisioningProfile(profile_path)
 
-    if xml:
-        return profile.xml
-
-    return profile.contents()
+    return profile.xml if xml else profile.contents()
 
 
 if __name__ == "__main__":
